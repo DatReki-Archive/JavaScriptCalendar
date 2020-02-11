@@ -1,0 +1,15 @@
+table {
+    width: 80%;
+    text-align: center;
+    margin: auto;
+}
+td {
+    width: 5%;
+    height: 15vh;
+    border: 1px solid black;
+    background: #9bb7e0;
+}
+.weekDays {
+    border: initial;
+    background: initial;
+}

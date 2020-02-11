@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;
+        charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Lab 15</title>
+</head>
+<body>
+    <form name="form">
+        <fieldset>
+            <legend>Check calendar</legend>
+            Select month: 
+            <select required name="month" id="month">
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+            </select>
+             Select year: 
+            <select required name="year" id="year">
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+                <option value="2010">2010</option>
+                <option value="2009">2009</option>
+                <option value="2008">2008</option>
+                <option value="2007">2007</option>
+                <option value="2006">2006</option>
+                <option value="2005">2005</option>
+                <option value="2004">2004</option>
+                <option value="2003">2003</option>
+                <option value="2002">2002</option>
+                <option value="2001">2001</option>
+                <option value="2000">2000</option>
+            </select>
+            <input type="button" value="Print Calendar"
+                onclick="calendar(
+                    document.form.month.value, 
+                    document.form.year.value)">
+        </fieldset>
+    </form>
+    <h1 id="selectedDate"></h1>
+    <table id="calendar">
+        <tbody>
+            <tr>
+                <td class="weekDays">zo</td>
+                <td class="weekDays">ma</td>
+                <td class="weekDays">di</td>
+                <td class="weekDays">wo</td>
+                <td class="weekDays">do</td>
+                <td class="weekDays">vr</td>
+                <td class="weekDays">za</td>
+            </tr>
+            <tr>
+                <td id="1"></td>
+                <td id="2"></td>
+                <td id="3"></td>
+                <td id="4"></td>
+                <td id="5"></td>
+                <td id="6"></td>
+                <td id="7"></td>
+            </tr>
+            <tr>
+                <td id="8"></td>
+                <td id="9"></td>
+                <td id="10"></td>
+                <td id="11"></td>
+                <td id="12"></td>
+                <td id="13"></td>
+                <td id="14"></td>
+            </tr>
+            <tr>
+                <td id="15"></td>
+                <td id="16"></td>
+                <td id="17"></td>
+                <td id="18"></td>
+                <td id="19"></td>
+                <td id="20"></td>
+                <td id="21"></td>
+            </tr>
+            <tr>
+                <td id="22"></td>
+                <td id="23"></td>
+                <td id="24"></td>
+                <td id="25"></td>
+                <td id="26"></td>
+                <td id="27"></td>
+                <td id="28"></td>
+            </tr>
+            <tr>
+                <td id="29"></td>
+                <td id="30"></td>
+                <td id="31"></td>
+                <td id="32"></td>
+                <td id="33"></td>
+                <td id="34"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        function calendar(month, year) {
+            if (!document.getElementById("12").textContent.length == 0) { reset(); } //Check if calender is empty if not make it empty
+            var fullMonth = month; //Get the name of the month for the h1 text
+            month = monthNumbers(month); //Change the month to a number so we can easily use it as a date object
+            var daysInMonth = daysInTheMonth(year, month); //Get all days in the selected month
+            var firstDayOfTheMonth = firstDayMonth(year, month); //Get the first day of the month
+            firstDayOfTheMonth = firstDayNumber(firstDayOfTheMonth.toString()); //Change first day of the month to a number
+            //We do this so we know on which square/week day our calendar will start
+            date = fullMonth + " " + year;
+            document.getElementById("selectedDate").innerHTML = date; //Write the full date to the <H1>
+            writeFirstDayToCalendar(firstDayOfTheMonth, daysInMonth); //Write first day to the correct position on the calendar
+        }
+        function monthNumbers(month) {
+            if (month == "January") { return("1"); }
+            if (month == "February") { return("2"); }
+            if (month == "March") { return("3"); }
+            if (month == "April") { return("4"); }
+            if (month == "May") { return("5"); }
+            if (month == "June") { return("6"); }
+            if (month == "July") { return("7"); }
+            if (month == "August") { return("8"); }
+            if (month == "September") { return("9"); }
+            if (month == "October") { return("10"); }
+            if (month == "November") { return("11"); }
+            if (month == "December") { return("12"); }
+        }
+        function daysInTheMonth(year, month) {
+            var date = new Date(year, month, 0);
+            return new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
+        }
+        function firstDayMonth(year, month) {
+            var date = new Date(year, month, 0);
+            return new Date(date.getFullYear(), date.getMonth(), 1);
+        }
+        function firstDayNumber(string) {
+            if (string.includes("Sun")) { return(1); }
+            if (string.includes("Mon")) { return(2); }
+            if (string.includes("Tue")) { return(3); }
+            if (string.includes("Wed")) { return(4); }
+            if (string.includes("Thu")) { return(5); }
+            if (string.includes("Fri")) { return(6); }
+            if (string.includes("Sat")) { return(7); }
+        }
+        function writeFirstDayToCalendar(firstDay, daysMonth) {
+            if (firstDay == 1)  { 
+                document.getElementById("1").innerHTML = 1;
+                writeRemainingDaysToCalendar(2, daysMonth); //Write the remaining days onto the calendar
+            }
+            if (firstDay == 2) { 
+                document.getElementById("2").innerHTML = 1;
+                writeRemainingDaysToCalendar(3, daysMonth);
+            }
+            if (firstDay == 3) { 
+                document.getElementById("3").innerHTML = 1;
+                writeRemainingDaysToCalendar(4, daysMonth); 
+            }
+            if (firstDay == 4) { 
+                document.getElementById("4").innerHTML = 1;
+                writeRemainingDaysToCalendar(5, daysMonth);
+            }
+            if (firstDay == 5) { 
+                document.getElementById("5").innerHTML = 1;
+                writeRemainingDaysToCalendar(6, daysMonth);
+            }
+            if (firstDay == 6) { 
+                document.getElementById("6").innerHTML = 1;
+                writeRemainingDaysToCalendar(7, daysMonth);
+            }
+            if (firstDay == 7) { 
+                document.getElementById("7").innerHTML = 1;
+                writeRemainingDaysToCalendar(8, daysMonth);
+            }
+        }
+        function writeRemainingDaysToCalendar(int, daysMonth) {
+            number = 2;
+            for (dag = int; dag <= daysMonth; dag++) {
+                document.getElementById(dag).innerHTML = number;
+                number++;
+            } 
+        }
+        function reset() {
+            for (int = 1; int <= 34; int++) {
+                document.getElementById(int).innerHTML = null;
+            }
+        }
+    </script>
+</body>
+</html>
